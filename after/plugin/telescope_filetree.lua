@@ -5,7 +5,7 @@ require("telescope").setup {
     file_browser = {
       path = vim.loop.cwd(),
       cwd = vim.loop.cwd(),
-      cwd_to_path = false,
+      cwd_to_path = true,
       grouped = false,
       files = true,
       add_dirs = true,
