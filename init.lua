@@ -1,7 +1,7 @@
 require("sorbet")
 vim.cmd("source ~/.config/nvim/vimfiles/init.vim")
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", ":Telescope file_browser<CR>")
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.cmd("colorscheme kanagawa")
 vim.opt.swapfile = false
 

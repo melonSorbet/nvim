@@ -49,12 +49,8 @@ local plugins = {
             "MunifTanjim/nui.nvim",
             -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` foore information
         }
-    },
-
-    {
-    "nvim-telescope/telescope-file-browser.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-}
+    }
+   
 
 }
 

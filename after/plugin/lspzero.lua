@@ -6,7 +6,7 @@ local lsp_attach = function(client, bufnr)
 
   local opts = {buffer = bufnr}
 
-  vim.keymap.set('n', '<C-m>', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+  vim.keymap.set('n', '<C-c>', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
   vim.keymap.set('n', '<C-d>', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
   vim.keymap.set('n', '<C-D>', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
   vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
@@ -49,9 +49,10 @@ cmp.setup({
 
 
     mapping = {
+        ['<Down>'] = cmp.mapping.select_next_item(),
         ['<Up>'] = cmp.mapping.select_prev_item(),
-        ['<S-j>'] = cmp.mapping.select_prev_item(),
-        ['<S-k>'] = cmp.mapping.select_next_item(),
+        ['<C-m>'] = cmp.mapping.select_next_item(),
+        ['<C-k>'] = cmp.mapping.select_prev_item(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Confirm with Enter key
         ['<Tab>'] = cmp.mapping.close(),
         -- Close completion menu with Ctrl-e
