@@ -6,7 +6,12 @@ vim.cmd("colorscheme kanagawa")
 vim.opt.swapfile = false
 
 
+vim.schedule(function()
+  vim.opt.clipboard = 'unnamedplus'
+end)
 
+vim.opt.scrolloff = 10
+vim.opt.cursorline = true
 vim.opt.relativenumber = true;
 vim.opt.nu = true;
 vim.opt.termguicolors = true;
