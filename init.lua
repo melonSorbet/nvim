@@ -9,7 +9,7 @@ vim.opt.swapfile = false
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
-
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.opt.scrolloff = 10
 vim.opt.cursorline = true
 vim.opt.relativenumber = true;
