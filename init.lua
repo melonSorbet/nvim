@@ -521,39 +521,7 @@ require('lazy').setup({
             })
           end
 
-          -- Diagnostics popup with independent 2s delay
-          local diag_timer = vim.loop.new_timer()
-
-          vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-            callback = function(args)
-              -- stop any running timer before starting a new one
-              if diag_timer:is_active() then
-                diag_timer:stop()
-              end
-
-              diag_timer:start(500, 0, function()
-                vim.schedule(function()
-                  -- only open if buffer still valid and visible
-                  if vim.api.nvim_buf_is_valid(args.buf) and vim.api.nvim_buf_is_loaded(args.buf) then
-                    vim.diagnostic.open_float(args.buf, {
-                      focus = false,
-                      border = 'rounded',
-                      source = 'if_many',
-                    })
-                  end
-                end)
-              end)
-            end,
-          })
-
-          -- Cancel if cursor moves
-          vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-            callback = function()
-              if diag_timer:is_active() then
-                diag_timer:stop()
-              end
-            end,
-          })
+          -- The following code creates a keymap to toggle inlay hints in your
           -- code, if the language server you are using supports them
           --
           -- This may be unwanted, since they displace some of your code
