@@ -314,12 +314,33 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
+        -- No need for file_ignore_patterns, .rgignore handles it!
+        vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--hidden',
+            '--follow',
+            -- ripgrep automatically reads ~/.rgignore
+          },
+        },
+        pickers = {
+          find_files = {
+            hidden = true,
+            follow = true,
+            find_command = { 'rg', '--files', '--hidden', '--follow' },
+            -- No need for --glob patterns, .rgignore handles it!
+          },
+          live_grep = {
+            additional_args = function()
+              return { "--hidden", "--follow" }
+            end,
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
