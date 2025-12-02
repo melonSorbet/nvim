@@ -17,14 +17,41 @@ vim.opt.swapfile = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
+-- Opacity
+vim.cmd [[
+  " Floats
+  highlight NormalFloat guibg=NONE ctermbg=NONE
+  highlight FloatBorder guibg=NONE ctermbg=NONE
 
+  " Sidebars / tree
+  highlight NvimTreeNormal guibg=NONE ctermbg=NONE
+  highlight NvimTreeEndOfBuffer guibg=NONE ctermbg=NONE
+
+  " Gutter / line numbers
+  highlight LineNr guibg=NONE ctermbg=NONE
+  highlight CursorLineNr guibg=NONE ctermbg=NONE
+  highlight SignColumn guibg=NONE ctermbg=NONE
+
+]]
+-- exit behaviour in UPPER CASE
+vim.api.nvim_create_user_command('W', function(opts)
+  vim.cmd('write' .. (opts.bang and '!' or '') .. ' ' .. opts.args)
+end, { bang = true, nargs = '*' })
+
+vim.api.nvim_create_user_command('WQ', function(opts)
+  vim.cmd('wq' .. (opts.bang and '!' or '') .. ' ' .. opts.args)
+end, { bang = true, nargs = '*' })
+
+vim.api.nvim_create_user_command('Q', function(opts)
+  vim.cmd('q' .. (opts.bang and '!' or '') .. ' ' .. opts.args)
+end, { bang = true, nargs = '*' })
+--
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
-
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -32,7 +59,6 @@ vim.opt.showmode = false
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
-
 -- Enable break indent
 vim.opt.breakindent = true
 
@@ -46,11 +72,8 @@ vim.opt.smartcase = true
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
 
--- Decrease update time
-vim.opt.updatetime = 250
-
--- Decrease mapped sequence wait time
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 150
+vim.opt.ttimeoutlen = 0
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -188,6 +211,14 @@ require('lazy').setup({
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+      on_attach = function()
+        -- Make GitSigns transparent
+        vim.api.nvim_set_hl(0, 'GitSignsAdd', { bg = 'NONE' })
+        vim.api.nvim_set_hl(0, 'GitSignsChange', { bg = 'NONE' })
+        vim.api.nvim_set_hl(0, 'GitSignsDelete', { bg = 'NONE' })
+        vim.api.nvim_set_hl(0, 'GitSignsChangeDelete', { bg = 'NONE' })
+        vim.api.nvim_set_hl(0, 'GitSignsTopDelete', { bg = 'NONE' })
+      end,
     },
   },
 
@@ -315,32 +346,6 @@ require('lazy').setup({
         --  All the info you're looking for is in `:help telescope.setup()`
         --
         -- No need for file_ignore_patterns, .rgignore handles it!
-        vimgrep_arguments = {
-            'rg',
-            '--color=never',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--smart-case',
-            '--hidden',
-            '--follow',
-            -- ripgrep automatically reads ~/.rgignore
-          },
-        },
-        pickers = {
-          find_files = {
-            hidden = true,
-            follow = true,
-            find_command = { 'rg', '--files', '--hidden', '--follow' },
-            -- No need for --glob patterns, .rgignore handles it!
-          },
-          live_grep = {
-            additional_args = function()
-              return { "--hidden", "--follow" }
-            end,
-          },
-        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -816,12 +821,19 @@ require('lazy').setup({
         styles = {
           comments = { italic = false }, -- Disable italics in comments
         },
+        transparent = true,
       }
 
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'kanagawa'
+      vim.cmd [[
+        highlight LineNr guibg=NONE ctermbg=NONE
+        highlight CursorLineNr guibg=NONE ctermbg=NONE
+        highlight SignColumn guibg=NONE ctermbg=NONE
+        highlight CursorLine ctermbg=NONE
+    ]]
     end,
   },
 
