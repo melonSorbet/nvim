@@ -558,7 +558,6 @@ require('lazy').setup({
           end
         end,
       })
-
       -- Diagnostic Config
       -- See :help vim.diagnostic.Opts
       vim.diagnostic.config {
@@ -634,6 +633,9 @@ require('lazy').setup({
         },
       }
 
+      -- Manual Installs
+      vim.lsp.enable 'nixd'
+
       -- Ensure the servers and tools above are installed
       --
       -- To check the current status of installed tools and/or manually install
@@ -669,7 +671,6 @@ require('lazy').setup({
       }
     end,
   },
-
   { -- Autoformat
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
